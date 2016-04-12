@@ -26,7 +26,10 @@ Ansible role to install and configure a [ISC DHCP](http://www.isc.org/downloads/
 ## Role Variables
 
 - **debug**: flag to run debug tasks (default: false).
+- **dhcp_server_dir_conf**: path to directory that will hold the dhcpd.conf file.
 - **dhcp_server_interfaces**: interfaces the server should serve DHCP requests.
+- **dhcp_server_dir_pid**: path to directory that will hold the dhcpd.pid file.
+- **dhcp_server_interfaces**: interfaces the server should serve DHCP requests (mandatory).
 
 Unless stated otherwise
 a default value is provided for each of the variables mentioned above
@@ -45,6 +48,8 @@ Example:
     - hosts: servers
       vars:
         debug: yes
+
+        dhcp_server_interfaces: [ eth0 ]
 
       roles:
          - role: saucelabs-ansible.dhcp_server
