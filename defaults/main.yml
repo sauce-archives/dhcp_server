@@ -1,5 +1,5 @@
 ---
-# file: dhcpd/defaults/main.yml
+# file: dhcp_server/defaults/main.yml
 #
 # defaults file
 #
