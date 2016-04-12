@@ -1,0 +1,12 @@
+---
+# file: dhcp_server/tests/tasks/installation.yml
+#
+# test installation tasks.
+#
+
+
+- name: installation | test if isc-dhcp-server package is installed?
+  shell: "dpkg-query -W -f='${Status}\n' isc-dhcp-server"
+  register: test
+  changed_when: no
+  failed_when: test.stdout.find('install ok installed') == -1

@@ -1,0 +1,23 @@
+---
+# file: dhcp_server/tasks/apparmor.yml
+#
+# apparmor configuration tasks.
+#
+
+- name: apparmor | ensure cache directory is present in the apparmor configuration
+  lineinfile:
+    dest=/etc/apparmor.d/usr.sbin.named
+    line="  {{ item }},"
+    insertbefore='}'
+  with_items:
+    - "{{ dhcpd_dir_cache }}/** lrw"
+    - "{{ dhcpd_dir_cache }}/ rw"
+
+- name: apparmor | ensure log directory is present in the apparmor configuration
+  lineinfile:
+    dest=/etc/apparmor.d/usr.sbin.named
+    line="  {{ item }} rw,"
+    insertbefore='}'
+  with_items:
+    - "{{ dhcpd_dir_log }}/**"
+    - "{{ dhcpd_dir_log }}/"

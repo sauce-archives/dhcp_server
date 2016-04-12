@@ -1,0 +1,14 @@
+---
+# file: dhcpd/defaults/main.yml
+#
+# defaults file
+#
+
+# path to directory that will hold the dhcpd.conf file.
+dhcp_server_dir_conf: '/etc/dhcp'
+
+# path to directory that will hold the dhcpd.pid file.
+dhcp_server_dir_pid: '/var/run'
+
+# additional options to start dhcpd with.
+dhcp_server_options: ''

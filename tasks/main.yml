@@ -1,0 +1,24 @@
+---
+# file: dhcp_server/tasks/main.yml
+#
+# tasks file
+#
+
+- include: debug.yml
+  when: debug | default(false)
+  tags: debug
+
+- include: validation.yml
+  tags: validation
+
+- include: installation.yml
+  tags: installation
+  sudo: yes
+
+- include: configuration.yml
+  tags: configuration
+  sudo: yes
+
+- include: apparmor.yml
+  tags: apparmor
+  sudo: yes

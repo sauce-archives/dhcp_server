@@ -1,0 +1,31 @@
+---
+# file: dhcp_server/tests/tasks/configuration.yml
+#
+# test configuration tasks.
+#
+
+- name: configuration | test if /etc/default/isc-dhcp-server file is present?
+  shell: test -e /etc/default/isc-dhcp-server
+  changed_when: no
+
+- name: configuration | test if /etc/dhcp/dhcpd.conf is present?
+  shell: test -e /etc/dhcp/dhcpd.conf
+  changed_when: no
+
+- name: configuration | copy dhcpd configuration test resources
+  copy:
+    src="tmp/{{ item }}.expected"
+    dest="/tmp/{{ item }}.expected"
+  sudo: yes
+  changed_when: no
+  with_items:
+    - isc-dhcp-server
+    - dhcpd.conf
+
+- name: configuration | test isc-dhcp-server template generation
+  shell: diff -w /etc/default/isc-dhcp-server /tmp/isc-dhcp-server.expected
+  changed_when: no
+
+- name: configuration | test dhcpd.conf template generation
+  shell: diff -w /etc/dhcpd/dhcpd.conf /tmp/dhcpd.conf.expected
+  changed_when: no

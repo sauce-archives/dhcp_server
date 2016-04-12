@@ -1,0 +1,14 @@
+---
+# file: dhcp_server/tasks/debug.yml
+#
+# debug tasks.
+#
+
+- debug:
+    var="{{ item }}"
+  when: "{{ item }} is defined"
+  with_items:
+    - dhcp_server_dir_conf
+    - dhcp_server_dir_pid
+    - dhcp_server_interfaces
+    - dhcp_server_options

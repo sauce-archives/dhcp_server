@@ -1,0 +1,29 @@
+---
+# file: dhcp_server/handlers/main.yml
+#
+# handlers file
+#
+
+- name: reload dhcp server
+  service:
+    name=isc-dhcp-server
+    state=reloaded
+  sudo: yes
+
+- name: restart dhcp server
+  service:
+    name=isc-dhcp-server
+    state=restarted
+  sudo: yes
+
+- name: start dhcp server
+  service:
+    name=isc-dhcp-server
+    state=started
+  sudo: yes
+
+- name: stop dhcp server
+  service:
+    name=isc-dhcp-server
+    state=stopped
+  sudo: yes

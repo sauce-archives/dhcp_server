@@ -1,0 +1,18 @@
+---
+# file: dhcp_server/tests/test.yml
+
+- name: tests play
+  hosts: "{{ vagrant_box }}"
+  gather_facts: yes
+
+  vars:
+    debug: true
+
+    dhcp_server_interfaces: [ eth0 ]
+
+  roles:
+    - role: dhcp_server
+      tags: dhcpd
+
+    - role: tests
+      tags: test

@@ -1,0 +1,20 @@
+---
+# file: dhcp_server/meta/main.yml
+#
+# meta file
+#
+galaxy_info:
+  author: Pedro Salgado
+  description: Role to setup ISC DHCP server.
+  company: saucelabs.com
+  license: BSD
+  min_ansible_version: 1.9.4
+  platforms:
+    - name: Ubuntu
+      versions:
+        - trusty
+        - precise
+  galaxy_tags:
+    - system
+    - dhcp
+dependencies: []

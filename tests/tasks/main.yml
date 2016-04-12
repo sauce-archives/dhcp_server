@@ -1,0 +1,18 @@
+---
+# file: dhcp_server/dhcpd/tests/tasks
+#
+# Test tasks to verify role execution.
+#
+
+- include: installation.yml
+  tags: installation
+
+- include: configuration.yml
+  tags: configuration
+
+- name: test if isc-dhcp-server process is running
+  shell: service isc-dhcp-server status
+  sudo: yes
+  register: test
+  changed_when: no
+  failed_when: test.stdout.find('isc-dhcp-server is running') == -1

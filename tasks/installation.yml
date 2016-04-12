@@ -1,0 +1,11 @@
+---
+# file: dhcp_server/tasks/installation.yml
+#
+# installation tasks.
+#
+
+- name: installation | ensure isc-dhcp-server is installed
+  apt:
+    name=isc-dhcp-server
+    state=present
+  sudo: yes

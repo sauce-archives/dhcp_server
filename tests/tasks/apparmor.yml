@@ -1,0 +1,21 @@
+---
+# file: dhcp_server/tests/tasks/apparmor.yml
+#
+# test apparmor tasks.
+#
+
+- name: apparmor | test if /etc/apparmor.d/usr.sbin.dhcpd file is present?
+  shell: test -e /etc/apparmor.d/usr.sbin.dhcpd
+  changed_when: no
+
+- name: apparmor | ensure conf directory is present in the apparmor configuration
+  shell: "grep '^  {{item}},$' /etc/apparmor.d/usr.sbin.dhcpd"
+  with_items:
+    - "{{ dhcp_server_dir_conf }}/** lrw"
+    - "{{ dhcp_server_dir_conf }}/ rw"
+
+- name: apparmor | ensure pid directory is present in the apparmor configuration
+  shell: "grep '^  {{item}},$' /etc/apparmor.d/usr.sbin.dhcpd"
+  with_items:
+    - "{{ dhcp_server_dir_pid }}/** rw"
+    - "{{ dhcp_server_dir_pid }}/ rw"
