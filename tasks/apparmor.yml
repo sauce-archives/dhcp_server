@@ -4,20 +4,13 @@
 # apparmor configuration tasks.
 #
 
-- name: apparmor | ensure cache directory is present in the apparmor configuration
+- name: apparmor | ensure dhcpd directories are present in the apparmor configuration
   lineinfile:
-    dest=/etc/apparmor.d/usr.sbin.named
+    dest=/etc/apparmor.d/usr.sbin.dhcpd
     line="  {{ item }},"
     insertbefore='}'
   with_items:
-    - "{{ dhcpd_dir_cache }}/** lrw"
-    - "{{ dhcpd_dir_cache }}/ rw"
-
-- name: apparmor | ensure log directory is present in the apparmor configuration
-  lineinfile:
-    dest=/etc/apparmor.d/usr.sbin.named
-    line="  {{ item }} rw,"
-    insertbefore='}'
-  with_items:
-    - "{{ dhcpd_dir_log }}/**"
-    - "{{ dhcpd_dir_log }}/"
+    - "{{ dhcp_server_dir_log }}/** rw"
+    - "{{ dhcp_server_dir_conf }}/ r"
+    - "{{ dhcp_server_dir_conf }}/** r"
+    - "{{ dhcp_server_dir_pid }}/dhcpd.pid rw"
