@@ -27,5 +27,5 @@
   changed_when: no
 
 - name: configuration | test dhcpd.conf template generation
-  shell: diff -w /etc/dhcpd/dhcpd.conf /tmp/dhcpd.conf.expected
+  shell: diff -w /etc/dhcp/dhcpd.conf /tmp/dhcpd.conf.expected
   changed_when: no

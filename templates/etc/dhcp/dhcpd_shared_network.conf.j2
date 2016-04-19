@@ -1,0 +1,19 @@
+{% macro print(network, config) %}
+shared-network "{{ network }}" {
+{% if 'options' in config %}
+{%   for param, value in config['options'].iteritems() | sort %}
+    option {{ param }} {{ value }};
+{%   endfor %}
+{% endif %}
+{% if 'subnet' in config %}
+{%   for subnet_config in config['subnet'] | sort %}
+
+    subnet {{ subnet_config['address'] }} netmask {{ subnet_config['netmask'] }} {
+{%     for param, value in subnet_config['parameters'].iteritems() | sort %}
+        {{ param }} {{ value }};
+{%     endfor %}
+    }
+{%   endfor %}
+{% endif %}
+}
+{% endmacro %}

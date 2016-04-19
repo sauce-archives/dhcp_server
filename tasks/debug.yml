@@ -8,7 +8,13 @@
     var="{{ item }}"
   when: "{{ item }} is defined"
   with_items:
+    - dhcp_server_classes
     - dhcp_server_dir_conf
     - dhcp_server_dir_pid
+    - dhcp_server_failover
     - dhcp_server_interfaces
+    - dhcp_server_keys
     - dhcp_server_options
+    - dhcp_server_pools
+    - dhcp_server_subnets
+    - dhcp_server_zones

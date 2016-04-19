@@ -1,1 +1,44 @@
-// {{ ansible_managed }}
+# {{ ansible_managed }}
+
+{% if dhcp_server_keys is defined %}
+{% import 'dhcpd_keys.conf.j2' as j2key with context %}
+{%   for key_name, key in dhcp_server_keys.iteritems() | sort %}
+{{ j2key.print(key_name, key) }}
+{%   endfor %}
+{% endif %}
+{% if dhcp_server_options is defined %}
+{%   for option, value in dhcp_server_global.iteritems() | sort %}
+{{ option }} {{ value }};
+{%   endfor %}
+{% endif %}
+
+{% if dhcp_server_failover is defined %}
+{% import 'dhcpd_failover.conf.j2' as j2failover with context %}
+{%   for name, parameters in dhcp_server_failover.iteritems() | sort %}
+{{ j2failover.print(name, parameters) }}
+{%   endfor %}
+{% endif %}
+{% if dhcp_server_zones is defined %}
+{% import 'dhcpd_zone.conf.j2' as j2zone with context %}
+{%   for zone, content in dhcp_server_zones.iteritems() | sort %}
+{{ j2zone.print(zone, content ) }}
+{%   endfor %}
+{% endif %}
+{% if dhcp_server_shared_networks is defined %}
+{% import 'dhcpd_shared_network.conf.j2' as j2shared_network with context %}
+{%   for network, config in dhcp_server_shared_networks.iteritems() | sort %}
+{{ j2shared_network.print(network, config) }}
+{%   endfor %}
+{% endif %}
+{% if dhcp_server_subnets is defined %}
+{% import 'dhcpd_subnet.conf.j2' as j2subnet with context %}
+{%   for subnet in dhcp_server_subnets %}
+{{ j2subnet.print(subnet) }}
+{%   endfor %}
+{% endif %}
+{% if dhcp_server_groups is defined %}
+{% import 'dhcpd_group.conf.j2' as j2group with context %}
+{%   for group, config in dhcp_server_groups.iteritems() | sort %}
+{{ j2group.print(group, config) }}
+{%   endfor %}
+{% endif %}

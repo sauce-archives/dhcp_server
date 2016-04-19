@@ -1,0 +1,6 @@
+{% macro print(key_name, key) %}
+key "{{ key_name }}" {
+    algorithm {{ key['algorithm'] }};
+    secret "{{ key['secret'] }}";
+}
+{% endmacro %}

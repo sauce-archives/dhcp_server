@@ -27,9 +27,12 @@ Ansible role to install and configure a [ISC DHCP](http://www.isc.org/downloads/
 
 - **debug**: flag to run debug tasks (default: false).
 - **dhcp_server_dir_conf**: path to directory that will hold the dhcpd.conf file.
-- **dhcp_server_interfaces**: interfaces the server should serve DHCP requests.
 - **dhcp_server_dir_pid**: path to directory that will hold the dhcpd.pid file.
+- **dhcp_server_hosts**: host section of the dhcpd.conf file.
 - **dhcp_server_interfaces**: interfaces the server should serve DHCP requests (mandatory).
+- **dhcp_server_keys**: key section of the dhcpd.conf file.
+- **dhcp_server_options**: global options of the dhcpd.conf file.
+- **dhcp_server_zones**: zone section of the dhcpd.conf file.
 
 Unless stated otherwise
 a default value is provided for each of the variables mentioned above

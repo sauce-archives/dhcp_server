@@ -1,0 +1,89 @@
+# Ansible managed file, do not edit directly
+
+key "DHCP_UPDATER" {
+    algorithm hmac-md5;
+    secret "pRP5FapFoJ95JEL06sv4PQ==";
+}
+
+default-lease-time 86400;
+
+failover peer "foo" {
+    address 10.0.2.15;
+    load balance max seconds 3;
+    max-response-delay 60;
+    max-unacked-updates 10;
+    mclt 3600;
+    peer address 10.0.2.15;
+    peer port 520;
+    port 519;
+    primary;
+    split 128;
+}
+
+zone example.org. {
+    key DHCP_UPDATER;
+    primary 10.0.2.15;
+}
+
+shared-network "name" {
+    option domain-name "test.redhat.com";
+    option domain-name-servers ns1.redhat.com, ns2.redhat.com;
+    option routers 192.168.0.254;
+
+    subnet 192.168.1.0 netmask 255.255.255.0 {
+        range 192.168.1.1 192.168.1.254;
+    }
+
+    subnet 192.168.2.0 netmask 255.255.255.0 {
+        range 192.168.2.1 192.168.2.254;
+    }
+}
+
+subnet 204.254.239.64 netmask 255.255.255.224 {
+    default-lease-time 86400;
+    max-lease-time 86400;
+    range 204.254.239.74 204.254.239.94;
+
+    host myhost {
+        fixed-address 192.168.0.249;
+        hardware ethernet 00:01:08:00:ad:33;
+    }
+}
+
+subnet 10.0.0.0 netmask 255.255.0.0 {
+    option routers 10.0.254.254;
+
+    pool {
+        option domain-name-servers bogus.example.com;
+        allow unknown-clients;
+        failover peer "foo";
+        max-lease-time 300;
+        range 10.0.0.200 10.0.0.253;
+    }
+
+    pool {
+        option domain-name-servers ns1.example.com, ns2.example.com;
+        deny unknown-clients;
+        failover peer "foo";
+        max-lease-time 28800;
+        range 10.0.0.5 10.0.0.199;
+    }
+}
+
+group {
+    filename "Xncd19r";
+    next-server ncd-booter;
+
+    host ncd1 {
+        hardware ethernet 0:c0:c3:49:2b:57;
+    }
+
+    host ncd4 {
+        hardware ethernet 0:c0:c3:80:fc:32;
+    }
+
+    host ncd8 {
+        hardware ethernet 0:c0:c3:22:46:81;
+    }
+}
+

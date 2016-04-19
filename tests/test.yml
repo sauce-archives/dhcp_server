@@ -10,6 +10,92 @@
 
     dhcp_server_interfaces: [ eth0 ]
 
+    dhcp_server_keys:
+      DHCP_UPDATER:
+        algorithm: hmac-md5
+        secret: pRP5FapFoJ95JEL06sv4PQ==
+    dhcp_server_global:
+      default-lease-time: 86400
+    dhcp_server_failover:
+      foo: |
+        primary;
+        address {{ ansible_eth0.ipv4.address }};
+        port 519;
+        peer address {{ ansible_eth0.ipv4.address }};
+        peer port 520;
+        max-response-delay 60;
+        max-unacked-updates 10;
+        mclt 3600;
+        split 128;
+        load balance max seconds 3;
+    dhcp_server_zones:
+      example.org:
+        key: DHCP_UPDATER
+        primary: "{{ ansible_eth0.ipv4.address }}"
+    dhcp_server_groups:
+      group1:
+        options:
+          filename: '"Xncd19r"'
+          next-server: 'ncd-booter'
+        hosts:
+          ncd1: |
+            hardware ethernet 0:c0:c3:49:2b:57;
+          ncd4: |
+            hardware ethernet 0:c0:c3:80:fc:32;
+          ncd8: |
+            hardware ethernet 0:c0:c3:22:46:81;
+    dhcp_server_shared_networks:
+      name:
+        options:
+          domain-name: '"test.redhat.com"'
+          domain-name-servers: 'ns1.redhat.com, ns2.redhat.com'
+          routers: 192.168.0.254
+        subnet:
+          - { address: 192.168.1.0,
+              netmask: 255.255.255.0,
+              parameters: {
+                range: '192.168.1.1 192.168.1.254' }
+            }
+          - { address: 192.168.2.0,
+              netmask: 255.255.255.0,
+              parameters: {
+                range: '192.168.2.1 192.168.2.254' }
+            }
+    dhcp_server_subnets:
+      - { address: 204.254.239.64,
+          netmask: 255.255.255.224,
+          options: {},
+          range: '204.254.239.74 204.254.239.94',
+          default-lease-time: 86400,
+          max-lease-time: 86400,
+          hosts: {
+            myhost: {
+              options: {
+                host-name: '"myhost"', },
+              fixed-address: 192.168.0.249,
+              hardware: 'ethernet 00:01:08:00:ad:33', }
+          }
+        }
+      - { address: 10.0.0.0,
+          netmask: 255.255.0.0,
+          options: {
+            routers: 10.0.254.254 },
+          pools: [
+            { options: {
+                domain-name-servers: bogus.example.com },
+              failover: 'peer "foo"',
+              max-lease-time: 300,
+              range: '10.0.0.200 10.0.0.253',
+              allow: unknown-clients },
+            { options: {
+                domain-name-servers: 'ns1.example.com, ns2.example.com' },
+              failover: 'peer "foo"',
+              max-lease-time: 28800,
+              range: '10.0.0.5 10.0.0.199',
+              deny: unknown-clients },
+          ]
+        }
+
   roles:
     - role: dhcp_server
       tags: dhcpd

@@ -15,4 +15,4 @@
   sudo: yes
   register: test
   changed_when: no
-  failed_when: test.stdout.find('isc-dhcp-server is running') == -1
+  failed_when: test.stdout.find('isc-dhcp-server start/running') == -1
