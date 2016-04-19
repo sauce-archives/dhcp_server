@@ -1,6 +1,6 @@
 {% macro print(name, parameters) %}
 failover peer "{{ name }}" {
-{%     for line in parameters.split('\n')[:-1] | sort %}
+{%     for line in parameters.split('\n') | sort %}
     {{ line }}
 {%   endfor %}
 }
