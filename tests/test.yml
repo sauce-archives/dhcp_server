@@ -18,6 +18,14 @@
     dhcp_server_global:
       default-lease-time: 86400
 
+    dhcp_server_classes:
+      myhosts:
+        config: |
+          match hardware
+        subclasses: |
+          00:07:e9:c8:14:7b
+          00:04:75:97:fc:8c
+
     dhcp_server_failover:
       foo: |
         primary

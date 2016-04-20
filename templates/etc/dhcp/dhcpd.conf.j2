@@ -1,5 +1,6 @@
 # {{ ansible_managed }}
 {% import 'macros/key.j2' as j2key with context %}
+{% import 'macros/class.j2' as j2class with context %}
 {% import 'macros/failover.j2' as j2failover with context %}
 {% import 'macros/zone.j2' as j2zone with context %}
 {% import 'macros/shared_network.j2' as j2shared_network with context %}
@@ -16,6 +17,10 @@
 {%   for option, value in dhcp_server_global.iteritems() | sort %}
 {{ option }} {{ value }};
 {%   endfor %}
+{% endif %}
+{% if dhcp_server_classes is defined %}
+
+{{    j2class.print_all(dhcp_server_classes) }}
 {% endif %}
 {% if dhcp_server_failover is defined %}
 

@@ -1,0 +1,26 @@
+{% macro print(name, class) -%}
+class "{{ name }}" {
+{% if class.config is defined and class.config %}
+{%   for line in class.config.split('\n') | sort %}
+{%     if line != '' %}
+    {{ line }};
+{%     endif %}
+{%   endfor %}
+{% endif %}
+}
+{% if class.subclasses is defined and class.subclasses %}
+
+{%   for line in class.subclasses.split('\n') | sort %}
+{%     if line != '' %}
+subclass "{{ name }}" {{ line }};
+{%     endif %}
+{%   endfor %}
+{% endif %}
+{%- endmacro %}
+
+
+{% macro print_all(classes) -%}
+{%   for name, config in classes.iteritems() | sort %}
+{{     print(name, config) }}
+{%   endfor %}
+{%- endmacro %}

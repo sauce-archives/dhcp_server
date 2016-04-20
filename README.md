@@ -26,6 +26,7 @@ Ansible role to install and configure a [ISC DHCP](http://www.isc.org/downloads/
 ## Role Variables
 
 - **debug**: flag to run debug tasks (default: false).
+- **dhcp_server_classes**: class/subclass section of the dhcpd.conf file.
 - **dhcp_server_dir_conf**: path to directory that will hold the dhcpd.conf file.
 - **dhcp_server_dir_pid**: path to directory that will hold the dhcpd.pid file.
 - **dhcp_server_hosts**: host section of the dhcpd.conf file.
@@ -51,7 +52,7 @@ Example:
     - hosts: servers
       vars:
         debug: yes
-    
+
         dhcp_server_interfaces: [ eth0 ]
 
         dhcp_server_keys:
@@ -61,6 +62,14 @@ Example:
 
         dhcp_server_global:
           default-lease-time: 86400
+
+        dhcp_server_classes:
+          myhosts:
+            config: |
+              match hardware;
+            subclasses: |
+              1:10:bf:48:xx:xx:xx
+              1:10:bf:48:xx:xx:xx
 
         dhcp_server_failover:
           foo: |

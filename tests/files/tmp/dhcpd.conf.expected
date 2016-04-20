@@ -7,6 +7,15 @@ key "DHCP_UPDATER" {
 
 default-lease-time 86400;
 
+class "myhosts" {
+    match hardware;
+}
+
+subclass "myhosts" 00:04:75:97:fc:8c;
+subclass "myhosts" 00:07:e9:c8:14:7b;
+
+
+
 failover peer "foo" {
     address 10.0.2.15;
     load balance max seconds 3;
