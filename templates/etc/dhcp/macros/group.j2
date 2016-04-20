@@ -1,0 +1,23 @@
+{% macro print(group) -%}
+{%   import 'macros/host.j2' as j2host with context %}
+group {
+{% if group.config is defined and group.config %}
+{%   for line in group.config.split('\n') | sort %}
+{%     if line != '' %}
+    {{ line }};
+{%     endif %}
+{%   endfor %}
+{% endif %}
+{% if group.hosts is defined and group.hosts %}
+
+{{   j2host.print_all(group.hosts) | indent(4, true) }}
+{% endif %}
+}
+{%- endmacro %}
+
+
+{% macro print_all(groups) -%}
+{%   for group_name, config in groups.iteritems() | sort %}
+{{     print(config) }}
+{%   endfor %}
+{%- endmacro %}

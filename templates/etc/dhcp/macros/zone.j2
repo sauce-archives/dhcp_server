@@ -1,7 +1,7 @@
-{% macro print(zone, content) %}
+{% macro print(zone, content) -%}
 zone {{ zone }}. {
 {% for param, value in content.iteritems() | sort %}
     {{ param }} {{ value }};
 {% endfor %}
 }
-{% endmacro %}
+{%- endmacro %}

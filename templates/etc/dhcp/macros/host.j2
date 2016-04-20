@@ -1,0 +1,18 @@
+{% macro print_host(host, config) -%}
+host {{ host }} {
+{%   if config %}
+{%     for line in config.split('\n') | sort %}
+{%       if line != '' %}
+    {{ line }};
+{%       endif %}
+{%     endfor %}
+{%   endif %}
+}
+{%- endmacro %}
+
+
+{% macro print_all(hosts) -%}
+{%   for host, config in hosts.iteritems() | sort %}
+{{     print_host(host, config) }}
+{%   endfor %}
+{%- endmacro %}

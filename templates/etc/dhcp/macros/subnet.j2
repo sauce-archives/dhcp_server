@@ -1,0 +1,28 @@
+{% macro print_subnet(subnet_id, subnet) -%}
+{%   import 'macros/host.j2' as j2host with context %}
+{%   import 'macros/pool.j2' as j2pool with context %}
+subnet {{ subnet_id.split('_')[0] }} netmask {{ subnet_id.split('_')[1] }} {
+{%   if subnet.config is defined and subnet.config %}
+{%     for line in subnet.config.split('\n') | sort %}
+{%       if line != '' %}
+    {{ line }};
+{%       endif %}
+{%     endfor %}
+{%   endif %}
+{%   if subnet.pools is defined and subnet.pools %}
+
+{{     j2pool.print_all(subnet.pools) | indent(4, true) }}
+{%   endif %}
+{%   if subnet.hosts is defined and subnet.hosts %}
+
+{{     j2host.print_all(subnet.hosts) | indent(4, true) }}
+{%   endif %}
+}
+{%- endmacro %}
+
+
+{% macro print_all(subnets) -%}
+{%   for subnet_id, config in subnets.iteritems() | sort %}
+{{     print_subnet(subnet_id, config) }}
+{%   endfor %}
+{%- endmacro %}

@@ -1,0 +1,9 @@
+{% macro print(name, config) -%}
+failover peer "{{ name }}" {
+{%   for line in config.split('\n') | sort %}
+{%     if line != '' %}
+    {{ line }};
+{%     endif %}
+{%   endfor %}
+}
+{%- endmacro %}

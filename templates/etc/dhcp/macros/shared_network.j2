@@ -1,0 +1,16 @@
+{% macro print(network, config) -%}
+{%   import 'macros/subnet.j2' as j2subnet with context %}
+shared-network "{{ network }}" {
+{%   if config.config is defined and config.config %}
+{%     for line in config.config.split('\n') | sort %}
+{%       if line != '' %}
+    {{ line }};
+{%       endif %}
+{%     endfor %}
+{%   endif %}
+{%   if config.subnets is defined and config.subnets %}
+
+{{     j2subnet.print_all(config.subnets) | indent(4, true) }}
+{%   endif %}
+}
+{%- endmacro %}
