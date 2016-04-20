@@ -8,11 +8,6 @@
   vars:
     debug: true
 
-    test_shared_network_redhat: |
-      option domain-name "test.redhat.com";
-      option domain-name-servers ns1.redhat.com, ns2.redhat.com;
-      option routers 192.168.0.254;
-
     dhcp_server_interfaces: [ eth0 ]
 
     dhcp_server_keys:
